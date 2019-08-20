@@ -1,4 +1,6 @@
 .mainSquare {
+    position: relative;
+    bottom: 1px;
     height: 500px;
     width: 98%;
     max-width: 1000px;
