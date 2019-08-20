@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import CanvasJSReact from './canvasjs.react';
 import "./styles.css";
+import "./canvasjs.min.js";
 
-const CanvasJS = CanvasJSReact.CanvasJS;
+// const CanvasJS = CanvasJSReact.CanvasJS;
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 export default class Square extends Component {
@@ -65,21 +66,34 @@ export default class Square extends Component {
 //   };
 
 
+
   render() {
     const { paragraph } = this.props;
     const { number } = this.state;
 
-    const options = {
+		const options = {
 			animationEnabled: true,
 			exportEnabled: true,
-			theme: "dark2", // "light1", "dark1", "dark2"
+			theme: "light2", //"light1", "dark1", "dark2"
 			title:{
 				text: ""
-			},
+      },
+      axisX:{
+        gridThickness: 0,
+        tickLength: 0,
+        lineThickness: 0,
+        labelFormatter: function(){
+          return " ";
+        }
+      },
+      axisY:{
+        interval: 250,
+        maximum: 1000
+      },
 			data: [{
-				type: "column",	
+				type: "column", //change type to bar, line, area, pie, etc
 				dataPoints: [
-					{ x: 0, y: number }
+					{ y: number }
 				]
       }]
     }
@@ -91,8 +105,8 @@ export default class Square extends Component {
           <p>{paragraph}</p>
         </div>
         <div className={`chart chart__${this.props.name}`}>
-            <div style={{ height: ((number/1000)*100) }} className={this.calculateClassNameForGraph()}></div>
-            {/* <CanvasJSChart options = {options}	/> */}
+            {/* <div style={{ height: ((number/1000)*100) }} className={this.calculateClassNameForGraph()}></div> */}
+            <CanvasJSChart options = {options}	/>
         </div>
       </div>
     );

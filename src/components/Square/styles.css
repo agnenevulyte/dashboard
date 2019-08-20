@@ -52,9 +52,9 @@
   .chart {
     position:relative;
     margin-top:40px;
-    width:50px;
+    /* width:50px; */
+    width: 150px;
     height:100px;
-    /* border: 2px solid yellow; */
     margin: 50px auto 0px;
   }
 
@@ -99,3 +99,18 @@
     height: 100%;
   }
 } */
+
+
+/* change canvas */
+
+.chart #canvasjs-react-chart-container-0, .chart #canvasjs-react-chart-container-1, .chart #canvasjs-react-chart-container-2 {
+  height: 150px !important;
+}
+
+.chart .canvasjs-chart-canvas {
+  height: 150px !important;
+}
+
+.chart .canvasjs-chart-toolbar, .chart .canvasjs-chart-credit {
+  display: none;
+}
