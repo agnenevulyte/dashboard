@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import CanvasJSReact from './canvasjs.react';
+import styled, { keyframes } from 'styled-components';
+// import CanvasJSReact from './canvasjs.react';
 import "./styles.css";
-import "./canvasjs.min.js";
+// import "./canvasjs.min.js";
 
-// const CanvasJS = CanvasJSReact.CanvasJS;
-const CanvasJSChart = CanvasJSReact.CanvasJSChart;
+// const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 export default class Square extends Component {
   constructor() {
@@ -16,6 +16,7 @@ export default class Square extends Component {
 
   componentWillMount() {
     this.fetchNumbers();
+    this.setState({ number: 0 });
   }
 
 
@@ -29,7 +30,7 @@ export default class Square extends Component {
         number
       });
 
-    }, 1000);
+    }, 5000);
   };
 
   calculateClassName = () => {
@@ -71,32 +72,53 @@ export default class Square extends Component {
     const { paragraph } = this.props;
     const { number } = this.state;
 
-		const options = {
-			animationEnabled: true,
-			exportEnabled: true,
-			theme: "light2", //"light1", "dark1", "dark2"
-			title:{
-				text: ""
-      },
-      axisX:{
-        gridThickness: 0,
-        tickLength: 0,
-        lineThickness: 0,
-        labelFormatter: function(){
-          return " ";
-        }
-      },
-      axisY:{
-        interval: 250,
-        maximum: 1000
-      },
-			data: [{
-				type: "column", //change type to bar, line, area, pie, etc
-				dataPoints: [
-					{ y: number }
-				]
-      }]
+
+		// const options = {
+    //   animationEnabled: true,
+    //   // animationDuration: 1000,
+		// 	exportEnabled: true,
+		// 	theme: "light2", //"light1", "dark1", "dark2"
+		// 	title:{
+		// 		text: ""
+    //   },
+    //   axisX:{
+    //     gridThickness: 0,
+    //     tickLength: 0,
+    //     lineThickness: 0,
+    //     labelFormatter: function(){
+    //       return " ";
+    //     }
+    //   },
+    //   axisY:{
+    //     interval: 250,
+    //     maximum: 1000
+    //   },
+		// 	data: [{
+		// 		type: "column", //change type to bar, line, area, pie, etc
+		// 		dataPoints: [
+		// 			{ y: number }
+		// 		]
+    //   }]
+    // }
+
+    const myAnim = keyframes`
+    from {
+      height: 0px;
     }
+    to {
+      height: ${(number * 100) / 1000}px
+    }
+    `;
+
+    const MyDiv = styled.div`
+      height: ${(number * 100) / 1000}px;
+      width: 100px;
+      marging-left: 20px;
+      position: absolute;
+      z-index: 2;
+      bottom: 0;
+      animation: ${myAnim} 0.5s ease;
+    `;
 
     return (
       <div className="squareWrapper">
@@ -106,7 +128,8 @@ export default class Square extends Component {
         </div>
         <div className={`chart chart__${this.props.name}`}>
             {/* <div style={{ height: ((number/1000)*100) }} className={this.calculateClassNameForGraph()}></div> */}
-            <CanvasJSChart options = {options}	/>
+            {/* <CanvasJSChart options = {options} onRef={ref => this.chart = ref}	/> */}
+              <MyDiv className={this.calculateClassNameForGraph()}/>
         </div>
       </div>
     );
